@@ -1,0 +1,28 @@
+Contributors:
+Sam Triest - striest@u.rochester.edu
+William Wilson - wwils11@u.rochester.edu
+Ryan Green - rgreen14@u.rochester.edu
+
+
+How to run:
+In order to run the program, there are a couple command line arguments. To run from a file, the format is:
+./main -[type of parsing] -f [filename]
+Where type of parsing is either -r for recursive descent, or -t for table driven. To run an expression from the command line, we follow a similar format:
+./main -[type of parsing] -c [expression]
+A complete example of a command that will execute the program via this method is:
+./main -r -c 1+2+3
+
+We have included a file containing a few arithmetic expressions in order to demonstrate how our program runs.
+To run this file an example would be:
+./main -t -f expressions.txt
+
+If no arguments are given, the program will complain and tell you so.
+
+Project Description
+In this project, we parse expressions to check whether they are in the language of arithmetic expressions as defined by the grammar in the textbook. We parse input in two different ways, recursively and through the table driven method. In the recursive method, we build the tree bottom up, because we place the terminals in the tree first, and then recursively backtrack up to the top of the parse tree. This method defines each production of the grammar as a function and then calls those productions when it sees the correct input.
+
+The table-driven parser is another approach to parsing that is similar to the recursive descent parser in many ways. Instead of individual parsing functions, the productions are stored in a table, and the parser is driven by a single function that is able to determine the correct productions to use based on its stack and the lookahead character. In contrast to the recursive descent parser, the table-driven parser builds the parse tree from the top down, with the assistance of a stack of tree nodes. 
+
+Once we have parsed the input and placed all of its elements into a parse tree, we must find a way to execute this tree to get the result of the arithmetic expressions. In order to execute the tree, we must start at the top, and then recursively get down to the terminals of the tree. There are several cases to be accounted for once the bottom of the tree is reached. If a node has 3 terminal children, we simply evaluate the expression contained within that node and set that to be the nodes value. However, there are cases in which we have either two terminals and a non terminal, or only two terminals. We reach two terminals without any nonterminals when we are dealing with a two or more digit number. When we hit this case, we simply concatenate the numbers together. The case of 2 terminals and 1 nonterminal, the method is not so simple. This means that the expression looked like x*y*z… with any operator. In this scenario, we must peek another level down in order to get the values that need to be used in the computation. 
+
+Our project will display whether an expression is parsable, and, if it is, the parse tree for that expression followed by the result when the parse tree is executed. Our program has a couple of abbreviations over the grammar given to us. FT is represented by the character f, TT is represented by t, and NT is represented by n. This in no way affects the performance of our program or the power of the grammar, it is simply how we chose to implement it. 
